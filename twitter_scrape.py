@@ -14,8 +14,13 @@ line = "\n--------------------------------------\n"
 print(target + "'s Twitter Feed!\n", line)
 for i in [[[y.text.strip() for y in x.findAll("p", {"class": "TweetTextSize"})],
            [y.text.strip() for y in x.findAll("a", {"class": "account-group"})],
-           [y.text.strip() for y in x.findAll("small", {"class": "time"})]] for x in
+           [y.text.strip()[y.text.strip().find([s for s in y.text.strip() if not s.isdigit()][0]):] for y in
+            x.findAll("small", {"class": "time"})]] for x in
           BeautifulSoup(urllib.request.urlopen("https://twitter.com/" + target).read(), "lxml").find("ol", {
               "class": "stream-items"}).findAll("li", {"class": "stream-item"})][:-1]:
-    print("\033[1mOn", i[2][0] + ",", i[1][0], "said:\033[0m")
+    if i[2][0][1].isdigit():
+        i[2][0] = "About " + i[2][0][1:]
+    else:
+        i[2][0] = "On " + i[2][0]
+    print("\033[1m" + i[2][0] + ",", i[1][0], "said:\033[0m")
     print(i[0][0] + "\n", line)
