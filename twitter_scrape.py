@@ -13,7 +13,7 @@ target = "Michael_Daalder"
 line = "\n--------------------------------------\n"
 print(target + "'s Twitter Feed!\n", line)
 for i in [[[y.text.strip() for y in x.findAll("p", {"class": "TweetTextSize"})],
-           [y.text.strip() for y in x.findAll("a", {"class": "account-group"})],
+           [y.text.strip().replace("Verified account", "") for y in x.findAll("a", {"class": "account-group"})],
            [y.text.strip()[y.text.strip().find([s for s in y.text.strip() if not s.isdigit()][0]):] for y in
             x.findAll("small", {"class": "time"})]] for x in
           BeautifulSoup(urllib.request.urlopen("https://twitter.com/" + target).read(), "lxml").find("ol", {
