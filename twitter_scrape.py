@@ -11,8 +11,7 @@ from bs4 import BeautifulSoup
 target = "Michael_Daalder"
 # target = "JohnIaconianni"
 
-line = "\n--------------------------------------\n"
-print(target + "'s Twitter Feed!\n", line)
+print(target + "'s Twitter Feed!\n")
 for i in [[[y.text.strip().split() for y in x.findAll("p", {"class": "TweetTextSize"})],
            [y.text.strip().replace("Verified account", "").replace("@", "\033[36m@") + "\033[1m" for y in
             x.findAll("a", {"class": "account-group"})],
@@ -25,11 +24,16 @@ for i in [[[y.text.strip().split() for y in x.findAll("p", {"class": "TweetTextS
     else:
         i[2][0] = "On " + i[2][0]
     tt = ''
+    z = 1
     for n in i[0][0]:
         if n[0] == '#':
             n = "\033[92m" + n + "\033[0m"
         elif n[0] == '@':
             n = "\033[36m" + n + "\033[0m"
-        tt += (n + " ")
+        tt += (n + " " + ("\n" if not z % 8 else ""))
+        z += 1
+    tt = "\t\033[0m| " + tt.replace("http", "\nhttp").replace("pic.twitter.com",
+                                                     "\n\033[94mimage at http://pic.twitter.com").replace(
+        "\n", "\n\t\033[0m| ") + "\033[0m\n"
     print("\033[1m" + i[2][0] + ",", i[1][0], "said:\033[0m")
-    print(tt.replace("http", "\nhttp").replace("pic.twitter.com", "\033[94m\nimage at http://pic.twitter.com") + "\033[0m\n", line)
+    print("\t ___________________________________________\n\t/\n" + tt + "\t\\\n\t --------------------------------------------\n")
