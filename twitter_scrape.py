@@ -32,4 +32,4 @@ for i in [[[y.text.strip().split() for y in x.findAll("p", {"class": "TweetTextS
             n = "\033[36m" + n + "\033[0m"
         tt += (n + " ")
     print("\033[1m" + i[2][0] + ",", i[1][0], "said:\033[0m")
-    print(tt.replace("pic.twitter.com", "\033[94m\nimage at http://pic.twitter.com") + "\033[0m\n", line)
+    print(tt.replace("http", "\nhttp").replace("pic.twitter.com", "\033[94m\nimage at http://pic.twitter.com") + "\033[0m\n", line)
