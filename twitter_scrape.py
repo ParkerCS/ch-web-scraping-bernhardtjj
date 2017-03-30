@@ -19,7 +19,7 @@ for i in [[[y.text.strip().split() for y in x.findAll("p", {"class": "TweetTextS
            [y.text.strip()[y.text.strip().find([s for s in y.text.strip() if not s.isdigit()][0]):] for y in
             x.findAll("small", {"class": "time"})]] for x in
           BeautifulSoup(urllib.request.urlopen("https://twitter.com/" + target).read(), "lxml").find("ol", {
-              "class": "stream-items"}).findAll("li", {"class": "stream-item"})][:-1]:
+              "class": "stream-items"}).findAll("li", {"class": "stream-item"})][:-2]:
     if i[2][0][1].isdigit():
         i[2][0] = "About " + i[2][0][1:]
     else:
